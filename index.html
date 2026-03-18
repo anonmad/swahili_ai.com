@@ -2,355 +2,1553 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google" content="notranslate">
-    <title>Anonmous.Network</title>
-    <link rel="icon" type="image/png" href="img/beats-electronics-logo.png">
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <title>Swahili_AI</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/dzfc5yopz/image/upload/v1769565681/1049443_wlsoqf.png">
     <style>
-        :root {
-            --neon-green: #0f0;
-            --neon-purple: #a0f;
-            --dark-bg: #111;
-        }
-        body {
-            font-family: 'Share Tech Mono', monospace;
-            background: var(--dark-bg);  /* solid dark foundation */
-            color: var(--neon-green);
+        /* ===== RESET & BASE ===== */
+        * {
             margin: 0;
-            padding: 44px;
-            overflow-x: hidden;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            cursor: default;
-            position: relative;
-            min-height: 100vh;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
         }
 
-        /* ---------- railway lines that draw themselves (clean, animated, pro) ---------- */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
+        body {
+            background: #0a0a0a;
+            color: #f0f0f0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 16px 24px;
+            border-bottom: 1px solid #2a2a2a;
+            background: #111111;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-dp {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #2563eb;
+        }
+
+        .header-dp img {
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            /* dual-layer railway pattern: rails (double lines) + ties (crosshatch) */
-            background-image: 
-                /* rails: two close parallel vertical lines repeated */
-                repeating-linear-gradient(
-                    90deg,
-                    transparent 0px,
-                    transparent 20px,
-                    rgba(0, 255, 0, 0.18) 20px,
-                    rgba(0, 255, 0, 0.18) 22px,
-                    transparent 22px,
-                    transparent 42px,
-                    rgba(0, 255, 0, 0.18) 42px,
-                    rgba(0, 255, 0, 0.18) 44px,
-                    transparent 44px,
-                    transparent 64px
-                ),
-                /* ties: horizontal segments crossing the rails */
-                repeating-linear-gradient(
-                    0deg,
-                    transparent 0px,
-                    transparent 28px,
-                    rgba(0, 255, 100, 0.12) 28px,
-                    rgba(0, 255, 100, 0.12) 30px,
-                    transparent 30px,
-                    transparent 58px,
-                    rgba(0, 255, 100, 0.12) 58px,
-                    rgba(0, 255, 100, 0.12) 60px,
-                    transparent 60px,
-                    transparent 88px
-                );
-            background-size: 200px 200px, 150px 150px;  /* larger than viewport to allow smooth motion */
-            background-position: 0 0, 0 0;
-            animation: railDraw 50s linear infinite;
-            will-change: background-position;
-            opacity: 0.9;  /* slightly visible but subtle */
+            object-fit: cover;
         }
 
-        /* animation makes the lines appear to be drawing themselves – diagonal movement gives endless sketching effect */
-        @keyframes railDraw {
-            0% {
-                background-position: 0% 0%, 0% 0%;
-            }
-            100% {
-                background-position: 200% 200%, 150% 150%;  /* both layers move diagonally */
-            }
+        .app-name {
+            font-size: 22px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* extra soft glow to enhance depth (optional) */
-        body::after {
-            content: '';
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 40% 50%, rgba(170, 0, 255, 0.02) 0%, transparent 60%),
-                        radial-gradient(circle at 80% 20%, rgba(0, 255, 150, 0.02) 0%, transparent 70%);
-            background-size: 100% 100%;
-            pointer-events: none;
-            z-index: -1;
-            animation: glowShift 30s ease-in-out infinite alternate;
+        .status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            color: #10b981;
         }
 
-        @keyframes glowShift {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            100% { transform: translate(-2%, -2%) rotate(1deg); }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
         }
-        /* ---------------------------------------------------------------------------- */
 
-        .no-translate {
-            translate: none;
+        /* ===== MAIN CHAT AREA ===== */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 20px;
+            overflow: hidden;
         }
-        .sound-control {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            z-index: 1000;
+
+        /* ===== MESSAGES CONTAINER ===== */
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .messages::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 3px;
+        }
+
+        .messages::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        /* ===== MESSAGE STYLES WITH DP ===== */
+        .message {
+            display: flex;
+            gap: 16px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        /* DP (Display Picture) Styles */
+        .dp {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid transparent;
+        }
+
+        .user .dp {
+            border-color: #2563eb;
+            background: #1a1a1a;
+        }
+
+        .ai .dp {
+            border-color: #10b981;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(16, 185, 129, 0.1));
+        }
+
+        .dp img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .user .dp i {
+            color: #2563eb;
+            font-size: 20px;
+        }
+
+        .ai .dp i {
+            color: #10b981;
+            font-size: 20px;
+        }
+
+        .message-content {
+            max-width: calc(100% - 58px);
+        }
+
+        .bubble {
+            padding: 18px 22px;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 15.5px;
+            word-wrap: break-word;
+        }
+
+        .user .bubble {
+            background: #2563eb;
             color: white;
-            padding: 5px 10px;
-            border-radius: 20px;
-            cursor: pointer;
+            border-bottom-right-radius: 5px;
         }
-        .container {
+
+        .ai .bubble {
+            background: #1a1a1a;
+            color: #f0f0f0;
+            border: 1px solid #333;
+            border-bottom-left-radius: 5px;
+        }
+
+        /* ===== WELCOME SECTION ===== */
+        .welcome {
+            text-align: center;
+            padding: 40px 20px;
             max-width: 600px;
             margin: 0 auto;
-            padding: 15px;
-            border: 1px solid var(--neon-purple);
-            box-shadow: 0 0 10px var(--neon-purple);
-            border-radius: 5px;
-            background-color: transparent;  /* lets the animated background shine through */
-            backdrop-filter: blur(1px);     /* ultra-light blur for readability */
-            position: relative;
-            z-index: 1;
         }
-        h1 {
-            text-align: center;
-            text-shadow: 0 0 5px var(--neon-green);
-            font-size: 22px;
+
+        .welcome h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        h5 {
-            font-weight: normal;
+
+        .welcome p {
+            color: #a0a0a0;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .quick-btn {
+            padding: 12px 24px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 25px;
+            color: #e0e0e0;
+            font-size: 14.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-btn:hover {
+            background: #2563eb;
+            border-color: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* ===== INPUT AREA ===== */
+        .input-area {
+            padding: 20px 0;
+            border-top: 1px solid #2a2a2a;
+            background: #111111;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 14px;
+            align-items: flex-end;
+        }
+
+        .input-box {
+            flex: 1;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            border-radius: 20px;
+            padding: 18px 22px;
+            font-size: 15.5px;
+            color: #f0f0f0;
+            resize: none;
+            min-height: 60px;
+            max-height: 200px;
+            outline: none;
+            transition: all 0.2s;
+            overflow: hidden;
+        }
+
+        .input-box:focus {
+            border-color: #2563eb;
+            background: #222;
+        }
+
+        .input-box::placeholder {
+            color: #666;
+        }
+
+        .send-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2563eb, #10b981);
             border: none;
-            margin: 1em 0;
-            padding: 0;
-            line-height: 1.5;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            flex-shrink: 0;
         }
-        .status-box {
-            margin: 15px 0;
-            padding: 10px;
-            border: 1px dashed var(--neon-purple);
-            border-radius: 3px;
-            background-color: rgba(0,0,0,0.3);
-            backdrop-filter: blur(2px);
+
+        .send-btn:hover:not(:disabled) {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(37, 99, 235, 0.3);
         }
-        #battery-level::after {
-            content: "▮".repeat(parseInt(document.getElementById("battery-level").textContent) / 10);
-            color: var(--neon-green);
+
+        .send-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
-        .fast { color: var(--neon-green); }
-        .slow { color: #f00; }
-        audio {
-            width: 100%;
-            margin: 20px 0;
-            filter: drop-shadow(0 0 5px var(--neon-purple));
+
+        /* ===== TYPING INDICATOR ===== */
+        .typing {
+            display: inline-flex;
+            gap: 5px;
+            padding: 18px 22px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 18px;
         }
-        @media (max-width: 600px) {
-            .container {
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            background: linear-gradient(135deg, #2563eb, #10b981);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes bounce {
+            0%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-7px); }
+        }
+
+        /* ===== ENHANCED ANSWER SYSTEM ===== */
+        .answer-system {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #333;
+        }
+
+        .follow-up {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .follow-up-btn {
+            padding: 8px 16px;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 20px;
+            color: #a0a0a0;
+            font-size: 13.5px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .follow-up-btn:hover {
+            background: #2563eb;
+            color: white;
+            border-color: #2563eb;
+        }
+
+        .rating {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            align-items: center;
+        }
+
+        .rating-text {
+            font-size: 13.5px;
+            color: #a0a0a0;
+        }
+
+        .rating-stars {
+            display: flex;
+            gap: 4px;
+        }
+
+        .star {
+            color: #444;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .star:hover,
+        .star.active {
+            color: #fbbf24;
+        }
+
+        /* ===== MARKDOWN ===== */
+        .bubble pre {
+            background: #222;
+            border-radius: 10px;
+            padding: 14px;
+            overflow-x: auto;
+            margin: 10px 0;
+            border: 1px solid #333;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+        }
+
+        .bubble code {
+            background: #222;
+            padding: 3px 7px;
+            border-radius: 5px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            border: 1px solid #333;
+        }
+
+        .bubble strong {
+            font-weight: 600;
+            color: #60a5fa;
+        }
+
+        .bubble em {
+            font-style: italic;
+            color: #a5b4fc;
+        }
+
+        .bubble ul, .bubble ol {
+            padding-left: 24px;
+            margin: 10px 0;
+        }
+
+        .bubble li {
+            margin-bottom: 5px;
+        }
+
+        .bubble blockquote {
+            border-left: 3px solid #10b981;
+            padding-left: 16px;
+            margin: 10px 0;
+            color: #a0a0a0;
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .chat-area {
                 padding: 10px;
             }
-            .btn {
-                padding: 10px;
+            
+            .header {
+                padding: 12px 16px;
+            }
+            
+            .messages {
+                padding: 10px 0;
+                gap: 20px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .dp {
+                width: 38px;
+                height: 38px;
+            }
+            
+            .message-content {
+                max-width: calc(100% - 54px);
+            }
+            
+            .input-area {
+                padding: 16px 0;
+            }
+            
+            .input-box {
+                padding: 16px 20px;
+                font-size: 15px;
+            }
+            
+            .send-btn {
+                width: 54px;
+                height: 54px;
+            }
+            
+            .welcome h1 {
+                font-size: 26px;
+            }
+            
+            .welcome p {
+                font-size: 15px;
+            }
+            
+            .quick-btn {
+                padding: 10px 20px;
                 font-size: 14px;
             }
         }
-        
-        h4 {
+
+        /* ===== PROFESSIONAL TOUCHES ===== */
+        .confidence {
+            font-size: 12px;
+            color: #10b981;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .ai-tag {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ===== FINAL QUESTION ===== */
+        .final-question {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
             text-align: center;
-            font-family: 'Share Tech Mono', monospace;
-            font-weight: normal;
-            padding: 0;
-            border: none;
-            color: var(--neon-purple);
         }
-        p {
-            text-align: center;
-        }
-        .social-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-            gap: 20px;
-            margin: 40px 0;
-            max-width: 500;
-        }
-        .social-link {
-            padding: 15px;
-            border: 1px solid #0f0;
-            border-radius: 5px;
-            color: #0f0;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            background: rgba(0, 30, 0, 0.5);
-            transition: all 0.3s ease;
-            text-align: center;
-            backdrop-filter: blur(2px);
-        }
-        .social-link:hover {
-            background: #0f0;
-            color: #000;
-            box-shadow: 0 0 20px #0f0;
-            transform: scale(1.1);
-        }
-        .social-link i {
-            font-size: 4em;
+
+        .final-question h4 {
+            color: #e0e0e0;
             margin-bottom: 10px;
+            font-size: 16px;
         }
-        @media (max-width: 600px) {
-            .social-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+
+        .final-question p {
+            color: #a0a0a0;
+            font-size: 14.5px;
+            margin-bottom: 15px;
         }
-        .alternative-grid {
-            grid-template-columns: repeat(3, minmax(100px, 1fr));
+
+        .final-question textarea {
+            width: 100%;
+            background: #222;
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 12px;
+            color: #f0f0f0;
+            font-size: 14.5px;
+            margin-bottom: 10px;
+            resize: vertical;
+            min-height: 80px;
         }
+
+        .final-question button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14.5px;
+            transition: background 0.2s;
+        }
+
+        .final-question button:hover {
+            background: #1d4ed8;
+        }
+
+        /* ===== IDENTITY BADGE ===== */
+        .identity-badge {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 10px 0;
+            font-size: 13px;
+        }
+
+        .identity-title {
+            color: #10b981;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .identity-details {
+            color: #a0a0a0;
+            line-height: 1.5;
+        }
+
+        /* ===== DP UPLOAD ===== */
+        .dp-upload {
+            display: none;
+        }
+
+        .dp-label {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .dp-label:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Kwa ajili ya simu - Fix input area */
+@media (max-width: 768px) {
+    /* Container kuu ya chat */
+    .chat-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    /* Sehemu ya messages - ina scroll */
+    .messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 16px;
+        padding-bottom: 80px; /* Nafasi ya input */
+        margin-bottom: 0;
+    }
+    
+    /* Sehemu ya kuandika - itakaa fixed chini */
+    .input-area {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 12px 16px;
+        padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        border-top: 1px solid #e5e7eb;
+        z-index: 1000;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+        transform: translateY(0);
+        transition: transform 0.3s ease;
+    }
+    
+    /* Input field yenyewe */
+    .input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(243, 244, 246, 0);
+        border-radius: 24px;
+        padding: 4px 4px 4px 16px;
+        border: 1px solid #e5e7eb;
+    }
+    
+    /* Textarea au input */
+    .message-input {
+        flex: 1;
+        border: none;
+        background: transparent;
+        padding: 12px 0;
+        font-size: 16px; /* Important: 16px prevents zoom on iOS */
+        line-height: 1.5;
+        max-height: 120px;
+        resize: none;
+        outline: none;
+    }
+    
+    /* Send button */
+    .send-button {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #10a37f;
+        color: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    
+    /* Fix kwa ajili ya keyboard inapofunguka */
+    .keyboard-open .input-area {
+        transform: translateY(0);
+    }
+    
+    /* Safe area kwa iPhones */
+    @supports (padding: max(0px)) {
+        .input-area {
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
+        }
+        
+        .messages {
+            padding-bottom: max(80px, calc(80px + env(safe-area-inset-bottom)));
+        }
+    }
+}
+
+/* Kwa ajili ya keyboard kwenye simu */
+@media (max-width: 768px) and (orientation: portrait) {
+    .input-area {
+        position: sticky;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0);
+    }
+}
+        
+        /* Hii inasaidia kwenye browsers za simu */
+html, body {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+#root, .app, .chat-container {
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Fix kwa iOS Safari */
+@supports (-webkit-touch-callout: none) {
+    .chat-container {
+        height: -webkit-fill-available;
+    }
+    
+    .messages {
+        padding-bottom: 90px; /* Bigger padding for iOS */
+    }
+}
+
+/* Ensure input stays visible */
+.input-area {
+    transition: bottom 0.2s ease, transform 0.2s ease;
+    will-change: transform;
+}
     </style>
 </head>
-<body class="no-translate">
-    <div class="container">
-       <div id="music-player">
-            <button onclick="toggleMusic()" style="background: #000; border: 1px solid #0f0; color: #0f0; padding: 5px 10px;">
-                <i class="fas fa-music"></i> 
-                    <span id="music-status">Play</span>
-            </button>
-        </div><br><br>
-        
-        <!-- Header -->
-        <h1>▓▒░ANONMAD NETWORK░▒▓</h1>
-        
-        <!-- Battery & Network -->
-        <div class="status-box">
-            <h5>🔋 BATTERY: <span id="battery-level">...</span></h5>
-            <h5>📡 NETWORK: <span id="network-speed">...</span></h5>
+<body>
+    <!-- Header with DP -->
+    <div class="header">
+        <div class="header-logo">
+            <div class="header-dp">
+                <img src="https://res.cloudinary.com/dzfc5yopz/image/upload/v1769565681/1049443_wlsoqf.png" alt="Sawahili AI" id="header-logo-img">
+            </div>
+            <div class="app-name">𝐒𝐰𝐚𝐡𝐢𝐥𝐢 𝐀𝐈</div>
         </div>
-        
-        <!-- Maandiko Yangu Binafsi -->
-        <p>Welcome to the anonmad network<br>You will find things related to the digital world.<br>If you need to learn more, click the link below to join us directly</p>
-       
-        <div class="social-grid">
-            <a href="https://github.com/Anonmad/" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-github"></i>
-                    <div>GitHub</div>
-            </a>
-            
-            <a href="https://whatsapp.com/channel/0029VavbyFZ5Ui2gQ0nN7y1Q" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-whatsapp"></i>
-                    <div>WhatsApp channel</div>
-            </a>
-            
-            <a href="https://wa.me/message/SODIKJBXAM7XL1?src=qr" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-whatsapp-square"></i>
-                    <div>DM Me</div>
-            </a>
-            
-            <a href="https://www.facebook.com/share/1AuuTP15qd/" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-facebook"></i>
-                    <div>Facebook</div>
-            </a>
-            
-            <a href="https://www.tiktok.com/@weruncode?_r=1&_t=ZS-940VbKDUQIm" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-tiktok"></i>
-                    <div>TikTok</div>
-            </a>
-            
-            <a href="https://anonmad.github.io/swahili_ai.com/" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fas fa-robot"></i>
-                    <div>Chat with AI</div>
-            </a>
-            
-            <a href="https://t.me/addlist/kmMW8Emuw9YzNTM0" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-telegram"></i>
-                    <div>Telegram</div>
-            </a>
-            
-            <a href="mailto:ratingsdomain@gmail.com" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fa-solid fa-envelope"></i>
-                    <div>Email</div>
-            </a>
-            
-            <a href="https://youtube.com/@zulixtech?si=QhvyaHy8eQrE7eKn" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fab fa-youtube"></i>
-                    <div>YouTube</div>
-            </a>
-            
-            <a href="https://www.instagram.com/wetypecode?igsh=MXFyNXA3dG1renkxcQ==" target="_blank" rel="noopener noreferrer" class="social-link">
-                <i class="fa-brands fa-instagram"></i>
-                    <div>Instagram</div>
-            </a>
+        <div class="status">
+            <div class="status-dot"></div>
+            <span>𝗢𝗻𝗹𝗶𝗻𝗲</span>
         </div>
-        
-        <!-- Music Player (Auto-Replay) -->
-        <div>
-            <audio id="bg-music" autoplay loop>
-                <source src="mus/Alan_Walker_-_On_My_Way_(Lyrics)_ft._Sabrina_Carpenter_&_Farruko(240p).mp3" type="audio/mpeg">
-                Your browser does not support audio.
-            </audio>
-            
-            <p>For more help, contact Anonmad by click the DM Me button.<br>If you have any problems.</p>
-            <h4>▶ NOW PLAYING: <strong>Alan_Walker_ft_Sabrina_Carpenter - On_My_Way</strong></h4>
-        </div>
-        <p style="font-size: 11px;"><a href="https://anonmad.github.io/bongo.net/" target="_blank" rel="noopener noreferrer"><i>Powered by bongo.Network</i></a></p>
     </div>
 
+    <!-- Main Chat Area -->
+    <div class="chat-area">
+        <!-- Messages Container -->
+        <div class="messages" id="messages">
+            <!-- Welcome Section -->
+            <div class="welcome" id="welcome">
+                <h1>𝗦𝘄𝗮𝗵𝗶𝗹𝗶 𝗔𝗜 𝗣𝗿𝗼</h1>
+                <p>Msaada wa kitaalamu wa AI kwa lugha ya Kiswahili. Nipo hapa kukujibu kwa usahihi na undani.</p>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-wrapper">
+                <textarea class="input-box" id="input" 
+                    placeholder="Andika swali lako hapa..." 
+                    rows="1"></textarea>
+                <button class="send-btn" id="send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden file input for DP upload -->
+    <input type="file" id="dp-upload" class="dp-upload" accept="image/*">
+
     <script>
-        // Battery Status
-        if ('getBattery' in navigator) {
-            navigator.getBattery().then(battery => {
-                updateBattery(battery);
-                battery.addEventListener('levelchange', () => updateBattery(battery));
+        // DOM Elements
+        const messagesDiv = document.getElementById('messages');
+        const input = document.getElementById('input');
+        const sendBtn = document.getElementById('send');
+        const welcomeDiv = document.getElementById('welcome');
+        const quickBtns = document.querySelectorAll('.quick-btn');
+        const dpUpload = document.getElementById('dp-upload');
+
+        // DP URLs
+        const aiDpUrl = 'https://res.cloudinary.com/dzfc5yopz/image/upload/v1769565681/1049443_wlsoqf.png';
+        let userDpUrl = ''; // Will be set by user upload or default
+
+        // Default user DP (can be changed)
+        const defaultUserDp = '<i class="fas fa-user"></i>';
+
+        // State
+        let isProcessing = false;
+        let conversationHistory = [];
+        let lastAnswerType = '';
+        let currentUserDp = defaultUserDp;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            autoResize();
+            showInitialMessage();
+            
+            // Load user DP from localStorage if exists
+            const savedUserDp = localStorage.getItem('swahili_user_dp');
+            if (savedUserDp) {
+                currentUserDp = savedUserDp;
+            }
+        });
+
+        // Event Listeners
+        function setupEventListeners() {
+            // Send message
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // Enter to send
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
             });
-        } else {
-            document.getElementById('battery-level').textContent = "N/A (No API)";
-        }
-
-        function updateBattery(battery) {
-            const level = Math.floor(battery.level * 100);
-            document.getElementById('battery-level').textContent = level;
-        }
-
-        // Network Speed (Ping Test)
-        function checkNetwork() {
-            const start = performance.now();
-            fetch('https://httpbin.org/get?rand=' + Math.random(), { cache: 'no-store' })
-                .then(() => {
-                    const speed = (performance.now() - start).toFixed(0);
-                    const speedText = speed < 500 ? `<span class="fast">${speed}ms (FAST)</span>` : `<span class="slow">${speed}ms (SLOW)</span>`;
-                    document.getElementById('network-speed').innerHTML = speedText;
-                })
-                .catch(() => {
-                    document.getElementById('network-speed').innerHTML = '<span class="slow">OFFLINE</span>';
+            
+            // Auto resize textarea
+            input.addEventListener('input', autoResize);
+            
+            // Quick actions
+            quickBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    input.value = btn.dataset.prompt;
+                    input.focus();
+                    autoResize();
                 });
+            });
+            
+            // User DP click to upload new image
+            document.addEventListener('click', (e) => {
+                if (e.target.closest('.user .dp') || e.target.closest('.dp-label')) {
+                    dpUpload.click();
+                }
+            });
+            
+            // Handle DP upload
+            dpUpload.addEventListener('change', handleDpUpload);
         }
-        checkNetwork();
-        setInterval(checkNetwork, 5000);
 
-        // Muziki Control
-        const music = document.getElementById('bg-music');
-        function toggleMusic() {
-            music.paused ? music.play() : music.pause();
-            document.getElementById('music-status').textContent = music.paused ? 'Play' : 'Pause';
+        // Handle DP upload
+        function handleDpUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            if (!file.type.startsWith('image/')) {
+                alert('Tafadhali chagua faili ya picha tu.');
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const imgUrl = e.target.result;
+                currentUserDp = `<img src="${imgUrl}" alt="User DP">`;
+                
+                // Save to localStorage
+                localStorage.setItem('sawahili_user_dp', currentUserDp);
+                
+                // Update all existing user messages with new DP
+                updateUserDps(imgUrl);
+                
+                // Show notification
+                showNotification('Picha yako imebadilishwa kikamilifu!');
+            };
+            
+            reader.readAsDataURL(file);
         }
+
+        // Update all user DPs with new image
+        function updateUserDps(imgUrl) {
+            const userDps = document.querySelectorAll('.user .dp');
+            userDps.forEach(dp => {
+                dp.innerHTML = `<img src="${imgUrl}" alt="User DP">`;
+            });
+        }
+
+        // Auto resize textarea
+        function autoResize() {
+            input.style.height = 'auto';
+            input.style.height = Math.min(input.scrollHeight, 200) + 'px';
+        }
+
+        // Show initial message with identity
+        function showInitialMessage() {
+            setTimeout(() => {
+                const initialMsg = `Habari! Mimi ni Swahili AI, jukwaa la teknolojia ya akili bandia (AI) inayopatikana Africa Masharki - Tanzania.
+
+Nipo hapa kukusaidia kwa lugha ya Kiswahili na Kiingereza. Ninaweza kukujibu maswali, kukufundisha, kukusaidia kuandika, na kutoa ushauri wa kitaalamu.`;
+                
+                // Add the initial message with identity badge
+                addMessageWithIdentity(initialMsg, 'ai');
+            }, 1000);
+        }
+
+        // Send message
+        async function sendMessage() {
+            const text = input.value.trim();
+            if (!text || isProcessing) return;
+
+            // Hide welcome if first message
+            if (welcomeDiv.style.display !== 'none') {
+                welcomeDiv.style.display = 'none';
+            }
+
+            // Add user message with DP
+            addMessage(text, 'user');
+            input.value = '';
+            autoResize();
+            isProcessing = true;
+            sendBtn.disabled = true;
+
+            // Show typing indicator
+            const typing = showTyping();
+            
+            try {
+                // Get AI response
+                const response = await getEnhancedResponse(text);
+                
+                // Remove typing indicator
+                messagesDiv.removeChild(typing);
+                
+                // Add AI response with enhanced system
+                addEnhancedMessage(response, text);
+                
+            } catch (error) {
+                console.error('Error:', error);
+                messagesDiv.removeChild(typing);
+                addMessage("Samahani, kuna tatizo la kiufundi. Tafadhali jaribu tena.", 'ai');
+            } finally {
+                isProcessing = false;
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+
+        // Get enhanced AI response with identity awareness
+        async function getEnhancedResponse(userMessage) {
+            // Check if this is an identity/location question
+            const isIdentityQuestion = checkIdentityQuestion(userMessage);
+            
+            if (isIdentityQuestion) {
+                return handleIdentityQuestion(userMessage);
+            }
+            
+            // Analyze question type
+            const questionType = analyzeQuestion(userMessage);
+            lastAnswerType = questionType;
+            
+            // Prepare context
+            const context = conversationHistory.slice(-3).map(msg => 
+                `${msg.role}: ${msg.content}`
+            ).join('\n');
+            
+            // Build enhanced prompt with identity awareness
+            let systemPrompt = `You are Swahili AI, a professional AI technology platform. 
+
+KEY IDENTITY INFORMATION:
+- Developed by: Anonmad Network team
+- Location: Kigoma, Tanzania
+- Brand: Professional enterprise-level AI technology
+- Language: Respond in Swahili for Swahili questions, English for English questions
+
+VOICE: Confident, professional, calm, friendly but authoritative, clear, transparent, trustworthy.`;
+            
+            // Add specific instructions based on question type
+            switch(questionType) {
+                case 'technical':
+                    systemPrompt += "\n\nThis is a technical question. Provide step-by-step explanation with examples. Maintain professional brand voice.";
+                    break;
+                case 'educational':
+                    systemPrompt += "\n\nThis is an educational question. Explain clearly with analogies and practical examples. Maintain professional brand voice.";
+                    break;
+                case 'creative':
+                    systemPrompt += "\n\nThis is a creative request. Be imaginative and provide multiple options. Maintain professional brand voice.";
+                    break;
+                case 'practical':
+                    systemPrompt += "\n\nThis is a practical question. Provide actionable advice with specific steps. Maintain professional brand voice.";
+                    break;
+                default:
+                    systemPrompt += "\n\nProvide accurate, detailed, and helpful responses. Maintain professional brand voice.";
+            }
+            
+            const fullPrompt = `${systemPrompt}\n\nContext:\n${context}\n\nUser: ${userMessage}\nAI:`;
+
+            try {
+                const response = await fetch("https://backend.buildpicoapps.com/aero/run/llm-api?pk=v1-Z0FBQUFBQm5IZkJDMlNyYUVUTjIyZVN3UWFNX3BFTU85SWpCM2NUMUk3T2dxejhLSzBhNWNMMXNzZlp3c09BSTR6YW1Sc1BmdGNTVk1GY0liT1RoWDZZX1lNZlZ0Z1dqd3c9PQ==", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ 
+                        prompt: fullPrompt,
+                        question_type: questionType,
+                        is_identity_question: isIdentityQuestion
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === "success") {
+                    return {
+                        text: data.text,
+                        type: questionType,
+                        confidence: 'high',
+                        isIdentityResponse: isIdentityQuestion
+                    };
+                } else {
+                    return {
+                        text: "Samahani, sijapata jibu sahihi kwa swali hilo. Tafadhali jaribu kuuliza kwa njia nyingine.",
+                        type: 'error',
+                        confidence: 'low',
+                        isIdentityResponse: false
+                    };
+                }
+            } catch (error) {
+                console.error('API Error:', error);
+                return {
+                    text: "Kuna tatizo la muunganisho wa mtandao. Tafadhali angalia muunganisho wako na ujaribu tena.",
+                    type: 'error',
+                    confidence: 'low',
+                    isIdentityResponse: false
+                };
+            }
+        }
+
+        // Check if question is about identity/location
+        function checkIdentityQuestion(question) {
+            const lower = question.toLowerCase();
+            const identityKeywords = [
+                'wewe ni nani', 'unatoka wapi', 'uko wapi', 'where are you', 'who are you',
+                'nani alikufanya', 'nani alikubuni', 'nani alikudunda', 'who made you',
+                'origin', 'creator', 'developer', 'location', 'base', 'headquarters',
+                'umetengenezwa na nani', 'unapatikana wapi', 'home', 'homebase',
+                'wapi unapatikana', 'asili yako', 'your origin', 'your home',
+                'mtengenezaji', 'mkubuni', 'mhandisi', 'manufacturer',
+                'who created you', 'where were you made', 'where do you come from',
+                'unaishi wapi', 'unafanya kazi wapi', 'unafanya kazi na nani'
+            ];
+            
+            return identityKeywords.some(keyword => lower.includes(keyword));
+        }
+
+        // Handle identity questions with professional responses
+        function handleIdentityQuestion(question) {
+            const lower = question.toLowerCase();
+            const isSwahili = lower.includes('nani') || lower.includes('wapi') || 
+                            lower.includes('unatoka') || lower.includes('uko') ||
+                            lower.includes('asili') || lower.includes('mtengenezaji');
+            
+            if (isSwahili) {
+                return {
+                    text: `Ninafurahi kukutambulisha!
+
+                        Mimi ni Swahili AI Pro, nilitengenezwa na timu ya wataalamu wa technology ya Anonmad Network iliyopo Kigoma, Tanzania.
+
+                        Mimi ni jukwaa la kitaalamu la akili bandia linalowezesha watu, biashara, na jamii kupitia teknolojia. Ninatoa ushauri sahihi, suluhisho za kiufundi, na msaada wa lugha ya Kiswahili na Kiingereza.
+
+                        Nipo hapa kukusaidia katika masuala yote - kutoka programu za kompyuta, uandishi, hesabu, hadi ushauri wa kitaalamu. Ninajenga ufumbuzi thabiti na wenye kipimo.
+
+                        Je, naweza kukusaidia kwa kitu gani leo?`,
+                    type: 'identity',
+                    confidence: 'high',
+                    isIdentityResponse: true
+                };
+            } else {
+                return {
+                    text: `I'm glad you asked about my identity!
+
+                       I'm Swahili AI Pro, I was created by a team of technology experts at Anonmad Network based in Kigoma, Tanzania.
+
+                       I am a professional artificial intelligence platform that empowers people, businesses, and communities through technology. I provide sound advice, technical solutions, and support in Swahili and English.
+
+                       I am here to help you with everything - from computer programming, writing, math, to professional consulting. I build robust and scalable solutions.
+
+                       How can I help you today?`,
+                    type: 'identity',
+                    confidence: 'high',
+                    isIdentityResponse: true
+                };
+            }
+        }
+
+        // Analyze question type
+        function analyzeQuestion(question) {
+            const lower = question.toLowerCase();
+            
+            if (lower.includes('programu') || lower.includes('code') || 
+                lower.includes('kompyuta') || lower.includes('mtandao') ||
+                lower.includes('software') || lower.includes('developer')) {
+                return 'technical';
+            } else if (lower.includes('fundisha') || lower.includes('eleza') || 
+                       lower.includes('maana') || lower.includes('nini') ||
+                       lower.includes('teach') || lower.includes('explain')) {
+                return 'educational';
+            } else if (lower.includes('andika') || lower.includes('tunga') || 
+                       lower.includes('simulizi') || lower.includes('hadithi') ||
+                       lower.includes('write') || lower.includes('create')) {
+                return 'creative';
+            } else if (lower.includes('jinsi') || lower.includes('vipi') || 
+                       lower.includes('namna') || lower.includes('njia') ||
+                       lower.includes('how') || lower.includes('method')) {
+                return 'practical';
+            }
+            
+            return 'general';
+        }
+
+        // Format text with markdown
+        function formatText(text) {
+            // Process markdown
+            text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+            text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+            text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+            text = text.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+            text = text.replace(/\n\n/g, '<br><br>');
+            text = text.replace(/\n/g, '<br>');
+            
+            return text;
+        }
+
+        // Add message to chat with DP
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            // Determine DP based on sender
+            let dpHtml = '';
+            if (sender === 'user') {
+                // User DP (clickable for upload)
+                dpHtml = `
+                    <div class="dp dp-label" title="Bonyeza kubadilisha picha yako">
+                        ${currentUserDp}
+                    </div>
+                `;
+            } else {
+                // AI DP (using your logo)
+                dpHtml = `
+                    <div class="dp" title="Swahili AI">
+                        <img src="${aiDpUrl}" alt="Swahili AI">
+                    </div>
+                `;
+            }
+            
+            messageDiv.innerHTML = `
+                ${sender === 'user' ? '' : dpHtml}
+                <div class="message-content">
+                    ${sender === 'ai' ? 
+                        '<div class="ai-tag"><i class="fas fa-robot"></i> Swahili AI Pro</div>' : 
+                        ''
+                    }
+                    <div class="bubble">${formatText(text)}</div>
+                </div>
+                ${sender === 'user' ? dpHtml : ''}
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            scrollToBottom();
+            
+            // Save to history
+            conversationHistory.push({
+                role: sender,
+                content: text,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        // Add message with identity badge
+        function addMessageWithIdentity(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            messageDiv.innerHTML = `
+                <div class="dp" title="Swahili AI">
+                    <img src="${aiDpUrl}" alt="Swahili AI">
+                </div>
+                <div class="message-content">
+                    <div class="ai-tag">
+                        <i class="fas fa-robot"></i> Swahili AI Pro
+                    </div>
+                    <div class="bubble">${formatText(text)}</div>
+                    
+                </div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            scrollToBottom();
+            
+            // Save to history
+            conversationHistory.push({
+                role: sender,
+                content: text,
+                timestamp: new Date().toISOString(),
+                hasIdentity: true
+            });
+        }
+
+        // Add enhanced message with follow-up options
+        function addEnhancedMessage(response, originalQuestion) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message ai';
+            
+            const formattedText = formatText(response.text);
+            
+            // Generate follow-up questions
+            const followUps = generateFollowUps(response.type, originalQuestion);
+            
+            // Check if this is an identity response
+            const isIdentityResponse = response.isIdentityResponse;
+            
+            messageDiv.innerHTML = `
+                <div class="dp" title="Swahili AI">
+                    <img src="${aiDpUrl}" alt="Swahili AI">
+                </div>
+                <div class="message-content">
+                    <div class="ai-tag">
+                        <i class="fas fa-robot"></i> Swahili AI Pro
+                    </div>
+                    <div class="bubble">
+                        ${formattedText}
+                        ${response.confidence === 'high' ? 
+                            '' : ''}
+                    </div>
+                    
+                    ${isIdentityResponse ? `
+                    ` : ''}
+                    
+                    <div class="answer-system">
+                        ${followUps.length > 0 ? `
+                            <div class="follow-up">
+                                ${followUps.map(q => 
+                                    `<button class="follow-up-btn" onclick="askFollowUp('${q}')">
+                                        ${q}
+                                    </button>`
+                                ).join('')}
+                            </div>
+                        ` : ''}
+                        
+                        <div class="rating">
+                            <span class="rating-text">Je jibu hili lilinufaisha?</span>
+                            <div class="rating-stars">
+                                ${[1,2,3,4,5].map(i => 
+                                    `<i class="fas fa-star star" onclick="rateAnswer(${i})"></i>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(messageDiv);
+            scrollToBottom();
+            
+            // Ask final question after 3 exchanges
+            if (conversationHistory.length >= 6) {
+                showFinalQuestion();
+            }
+        }
+
+        // Generate follow-up questions
+        function generateFollowUps(type, question) {
+            const followUps = [];
+            
+            switch(type) {
+                case 'technical':
+                    followUps.push(
+                        'Naweza kupata mfano zaidi?',
+                        'Je, kuna njia rahisi zaidi?',
+                        'Kuna vitu vingine vya kuzingatia?'
+                    );
+                    break;
+                case 'educational':
+                    followUps.push(
+                        'Naweza kupata mifano mingine?',
+                        'Je, unaweza kufafanua zaidi?',
+                        'Kuna nyenzo za ziada za kusoma?'
+                    );
+                    break;
+                case 'creative':
+                    followUps.push(
+                        'Kuna chaguo jingine?',
+                        'Je, unaweza kuongezea undani?',
+                        'Kuna mfano mwingine?'
+                    );
+                    break;
+                case 'practical':
+                    followUps.push(
+                        'Kuna hatua za ziada?',
+                        'Je, kuna njia mbadala?',
+                        'Kuna vifaa vinavyohitajika?'
+                    );
+                    break;
+                case 'identity':
+                    followUps.push(
+                        'Unaweza kusaidia vipi zaidi?',
+                        'Kuna huduma nyingine unazotoa?',
+                        'Naweza kujifunza zaidi kuhusu Anonmad Network?'
+                    );
+                    break;
+                default:
+                    followUps.push(
+                        'Naweza kusaidia kwa kitu kingine?',
+                        'Je, kuna sehemu nyingine ya kufafanua?'
+                    );
+            }
+            
+            return followUps;
+        }
+
+        // Ask follow-up question
+        window.askFollowUp = function(question) {
+            input.value = question;
+            sendMessage();
+        };
+
+        // Rate answer - Iliyoboreshwa kutuma email
+window.rateAnswer = function(rating) {
+    const stars = document.querySelectorAll('.rating-stars .star');
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add('active');
+        } else {
+            star.classList.remove('active');
+        }
+    });
+    
+    // ===== SEHEMU MPYA: Kutuma rating kwenye email =====
+    // Tumia Web3Forms kutuma data moja kwa moja kwenye email yako
+    const formData = new FormData();
+    formData.append('access_key', '5b1afb99-c506-4aa0-a465-904dbc20b678'); // Pata hii kutoka web3forms.com
+    formData.append('subject', 'Maoni Mapya ya Nyota kutoka kwa Mtumiaji');
+    formData.append('from_name', 'Swahili Bot User');
+    formData.append('email', 'ratingsdomain@gmail.com'); // Email yako ya kupokea taarifa
+    formData.append('message', `Mtumiaji amekupa rating ya ${rating} kati ya 5 nyota`);
+    formData.append('rating', rating + '/5 nyota');
+    formData.append('tarehe', new Date().toLocaleString('sw-TZ'));
+    formData.append('url', window.location.href);
+    
+    // Tuma data kwenye Web3Forms
+    fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Rating imetumwa kwenye email yako');
+            
+            // Optional: Ongeza notification ndogo kwamba imetumwa
+            const notifyDiv = document.createElement('div');
+            notifyDiv.className = 'message ai';
+            notifyDiv.innerHTML = `
+                <div class="dp" title="Swahili AI">
+                    <img src="${aiDpUrl}" alt="Sawahili AI">
+                </div>
+                <div class="message-content">
+                    <div class="bubble" style="font-size: 12px; padding: 8px 12px; background: #e8f5e8;">
+                        <i class="fas fa-check-circle" style="color: #10b981; margin-right: 8px;"></i>
+                        Maoni yako yametumwa kwa msimamizi
+                    </div>
+                </div>
+            `;
+            messagesDiv.appendChild(notifyDiv);
+            scrollToBottom();
+        } else {
+            console.error('Tatizo la kutuma rating:', data);
+        }
+    })
+    .catch(error => {
+        console.error('Tatizo la mtandao:', error);
+    });
+    // ===== MWISHO WA SEHEMU MPYA =====
+    
+    // Show thank you message (Code yako ya awali imebaki sawa)
+    setTimeout(() => {
+        const feedback = rating >= 4 ? 
+            'Asante kwa tathmini yako nzuri!' : 
+            'Asante kwa tathmini. Nitaboresha zaidi.';
+        
+        const feedbackDiv = document.createElement('div');
+        feedbackDiv.className = 'message ai';
+        feedbackDiv.innerHTML = `
+            <div class="dp" title="Sawahili AI">
+                <img src="${aiDpUrl}" alt="Swahili AI">
+            </div>
+            <div class="message-content">
+                <div class="bubble" style="font-size: 14px; padding: 12px 16px;">
+                    <i class="fas fa-heart" style="color: #ef4444; margin-right: 8px;"></i>
+                    ${feedback}
+                </div>
+            </div>
+        `;
+        messagesDiv.appendChild(feedbackDiv);
+        scrollToBottom();
+    }, 500);
+};
+
+        // Show final question
+        function showFinalQuestion() {
+            // Check if already shown
+            if (document.querySelector('.final-question')) return;
+            
+            const finalDiv = document.createElement('div');
+            finalDiv.className = 'final-question';
+            finalDiv.innerHTML = `
+            `;
+            
+            messagesDiv.appendChild(finalDiv);
+            scrollToBottom();
+        }
+
+        // Submit final question
+        window.submitFinalQuestion = function() {
+            const finalInput = document.getElementById('final-input');
+            const question = finalInput.value.trim();
+            
+            if (question) {
+                // Remove final question div
+                const finalDiv = document.querySelector('.final-question');
+                if (finalDiv) {
+                    messagesDiv.removeChild(finalDiv);
+                }
+                
+                // Ask the question
+                input.value = question;
+                sendMessage();
+            }
+        };
+
+        // Show typing indicator
+        function showTyping() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'message ai';
+            
+            typingDiv.innerHTML = `
+                <div class="dp" title="Swahili AI">
+                    <img src="${aiDpUrl}" alt="Swahili AI">
+                </div>
+                <div class="message-content">
+                    <div class="typing">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            `;
+            
+            messagesDiv.appendChild(typingDiv);
+            scrollToBottom();
+            return typingDiv;
+        }
+
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #2563eb, #10b981);
+                color: white;
+                padding: 12px 20px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+                z-index: 1000;
+                animation: fadeIn 0.3s ease-out;
+                max-width: 300px;
+                font-weight: 500;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'fadeIn 0.3s ease-out reverse';
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
+        }
+
+        // Scroll to bottom
+        function scrollToBottom() {
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        // Detect when keyboard opens on mobile
+if ('visualViewport' in window) {
+    let viewport = window.visualViewport;
+    
+    function handleViewportChange() {
+        let keyboardOpen = viewport.height < window.innerHeight * 0.8;
+        
+        if (keyboardOpen) {
+            document.body.classList.add('keyboard-open');
+            // Scroll to bottom when keyboard opens
+            setTimeout(() => {
+                let messagesDiv = document.querySelector('.messages');
+                if (messagesDiv) {
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                }
+            }, 100);
+        } else {
+            document.body.classList.remove('keyboard-open');
+        }
+    }
+    
+    viewport.addEventListener('resize', handleViewportChange);
+    viewport.addEventListener('scroll', handleViewportChange);
+}
+
+// Auto-resize textarea
+function autoResizeTextarea() {
+    const textarea = document.querySelector('.message-input');
+    if (!textarea) return;
+    
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+        
+        // Max height
+        if (this.scrollHeight > 120) {
+            this.style.height = '120px';
+            this.style.overflowY = 'auto';
+        } else {
+            this.style.overflowY = 'hidden';
+        }
+    });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', function() {
+    autoResizeTextarea();
+});
     </script>
 </body>
 </html>
